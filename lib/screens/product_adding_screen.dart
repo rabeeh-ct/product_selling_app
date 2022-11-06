@@ -1,12 +1,10 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:product_selling_app/constants/constants.dart';
-import 'package:product_selling_app/widgets/reusable_textfield.dart';
+
 
 class ProductAddingScreen extends StatefulWidget {
   ProductAddingScreen({Key? key}) : super(key: key);
@@ -163,6 +161,7 @@ class _ProductAddingScreenState extends State<ProductAddingScreen> {
                       padding:
                       EdgeInsets.symmetric(horizontal: size.width * .07),
                       child: TextField(
+                        maxLength: 45,
                         controller: productdesripctr,
                         decoration: InputDecoration(
                           labelText: 'Description',
