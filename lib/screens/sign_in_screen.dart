@@ -1,20 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:product_selling_app/constants/constants.dart';
 import 'package:product_selling_app/screens/home_page.dart';
+import 'package:product_selling_app/screens/product_screen.dart';
 import 'package:product_selling_app/widgets/reusable_textfield.dart';
 import '../widgets/reusable_button.dart';
 
 class SignInScreen extends StatefulWidget {
-  SignInScreen({Key? key,required bool this.isitlogin}) : super(key: key);
+  SignInScreen({Key? key, required bool this.isitlogin}) : super(key: key);
   bool isitlogin;
+
   @override
   State<SignInScreen> createState() => _SignInScreenState();
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  TextEditingController emailctr=TextEditingController();
-  TextEditingController passwordctr=TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -48,9 +49,7 @@ class _SignInScreenState extends State<SignInScreen> {
               child: Container(
                 width: size.width * .17,
                 decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.blue[200]
-                ),
+                    shape: BoxShape.circle, color: Colors.blue[200]),
                 child: IconButton(
                     onPressed: () => Navigator.pop(context),
                     icon: Icon(
@@ -86,11 +85,17 @@ class _SignInScreenState extends State<SignInScreen> {
                       SizedBox(
                         height: size.height * .1,
                       ),
-                      UsableTextField(hintText: 'Email',isitHide: false,txtctr: emailctr),
+                      UsableTextField(
+                          hintText: 'Email',
+                          isitHide: false,
+                          txtctr: Constants.emailctr),
                       SizedBox(
                         height: size.height * .03,
                       ),
-                      UsableTextField(hintText: 'Password',isitHide: true,txtctr: passwordctr),
+                      UsableTextField(
+                          hintText: 'Password',
+                          isitHide: true,
+                          txtctr: Constants.passwordctr),
                       SizedBox(
                         height: size.height * .03,
                       ),
@@ -119,7 +124,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     GestureDetector(
                       child: SignButton(
                         clr: Colors.indigo[900]!,
-                        text: widget.isitlogin==true?'SIGN IN':'SIGN UP',
+                        text: widget.isitlogin == true ? 'SIGN IN' : 'SIGN UP',
                         txtclr: Colors.white,
                         fn: sign,
                       ),
@@ -159,7 +164,8 @@ class _SignInScreenState extends State<SignInScreen> {
                           onTap: () {
                             setState(() {
                               widget.isitlogin = !widget.isitlogin;
-                            });;
+                            });
+                            ;
                           },
                         ),
                       ],
@@ -175,7 +181,33 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   sign() {
-    print(widget.isitlogin);
-
+    print("${widget.isitlogin},${Constants.emailctr.text},");
+    if (widget.isitlogin != true) {
+      FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: Constants.emailctr.text,
+              password: Constants.passwordctr.text)
+          .then(
+            (value) => Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductScreen(),
+              ),
+            ),
+          );
+    } else {
+      FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: Constants.emailctr.text,
+              password: Constants.passwordctr.text)
+          .then(
+            (value) => Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductScreen(),
+              ),
+            ),
+          );
+    }
   }
 }

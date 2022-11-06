@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "784312703826",
+    "project_id": "product-selling-app-ab147",
+    "storage_bucket": "product-selling-app-ab147.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784312703826:android:e79f9e98281f5fe4cab88b",
+        "android_client_info": {
+          "package_name": "com.example.product_selling_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784312703826-a9fl49idchvcg2uk5tr2n53mi1pcjqjm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARsRnJNCZ9vMU1r3XUwaomBr4K5NO997E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "784312703826-a9fl49idchvcg2uk5tr2n53mi1pcjqjm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

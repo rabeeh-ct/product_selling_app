@@ -39,6 +39,9 @@ dependencies:
   lottie: ^1.4.3
   firebase_core: ^2.1.1
   firebase_auth: ^4.1.1
+  cloud_firestore: ^4.0.4
+  circle_nav_bar: ^2.0.0
+  image_picker: ^0.8.6
 
 dev_dependencies:
   flutter_test:
