@@ -1,3 +1,4 @@
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,6 +22,7 @@ class _ProductAddingScreenState extends State<ProductAddingScreen> {
   TextEditingController productdesripctr = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String? imageurl;
+  bool isclickable=true;
 
   @override
   Widget build(BuildContext context) {
@@ -186,7 +188,7 @@ class _ProductAddingScreenState extends State<ProductAddingScreen> {
                         MaterialStatePropertyAll(Colors.black)),
                     child: Text('Cancel')),
                 ElevatedButton(
-                    onPressed: () => sendData(),
+                    onPressed: () => isclickable==true?sendData():null,
                     style: ButtonStyle(
                         backgroundColor:
                         MaterialStatePropertyAll(Colors.indigo[900])),
@@ -200,11 +202,13 @@ class _ProductAddingScreenState extends State<ProductAddingScreen> {
   }
 
   Future sendData() async {
+    isclickable=false;
     if (productnamectr.text != '' &&
         pricectr.text != '' &&
         productdesripctr.text != '') {
-      var imageStorage = FirebaseStorage.instance.ref().child('images$productnamectr.text');
-      var uploadimage = imageStorage.putFile(imageFile!);
+      final imageStorage = FirebaseStorage.instance.ref().child('images${productnamectr.text}');
+      print(imageFile!.path);
+      var uploadimage =await imageStorage.putFile(imageFile!);
       imageurl = await imageStorage.getDownloadURL();
       print(imageurl);
       FirebaseFirestore.instance.collection('products').add({
@@ -226,5 +230,6 @@ class _ProductAddingScreenState extends State<ProductAddingScreen> {
         ),
       );
     }
+    isclickable=true;
   }
 }
