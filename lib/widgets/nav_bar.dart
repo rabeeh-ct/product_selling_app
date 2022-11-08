@@ -11,7 +11,7 @@ class NavBar extends StatelessWidget {
       activeIndex: 1,
       activeIcons: [
         Icon(
-          Icons.person,
+          Icons.home, color: Colors.white, size: 30
         ),
         IconButton(
             onPressed: () => Navigator.push(
@@ -20,12 +20,12 @@ class NavBar extends StatelessWidget {
                   builder: (context) => ProductAddingScreen(),
                 )),
             icon: Icon(Icons.add, color: Colors.white, size: 30)),
-        Icon(Icons.menu_rounded),
+        Icon(Icons.message, color: Colors.white, size: 30),
       ],
       inactiveIcons: const [
-        Text(""),
-        Text(""),
-        Text(""),
+        Icon(Icons.home,color: Colors.white),
+        Icon(Icons.add, color: Colors.white,),
+        Icon(Icons.message, color: Colors.white,)
       ],
       height: 60,
       circleWidth: 60,
