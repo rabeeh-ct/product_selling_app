@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../screens/individual_product_screen.dart';
+
 class ProductList extends StatelessWidget {
   ProductList(
       {Key? key,
@@ -22,79 +24,60 @@ class ProductList extends StatelessWidget {
           top: size.height * .01,
           left: size.width * .03,
           right: size.width * .03),
-      child: Container(
-        height: size.height * .23,
-        decoration: BoxDecoration(
-          color: Colors.indigo[100],
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Container(width: size.width*.4,
-                  child: Image.network(
-                    imageUrl,
-                    fit: BoxFit.fitWidth,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => IndividualProductScreen(description: description,imageUrl: imageUrl,price: price,productName: productName),));
+        },
+        child: Container(
+          // height: size.height * .3,
+          decoration: BoxDecoration(
+            color: Colors.grey[200],
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(size.width * .02),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Container(
+                    height: size.height * .17,
+                    width: double.infinity,
+                    child: Image.network(
+                      imageUrl,
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
                 ),
-              ),
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: size.height * .02),
-                      child: Text(
-                        productName.toUpperCase(),
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
+                SizedBox(height: size.height*.01,),
+                Text(
+                  productName.toUpperCase(),
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500),
+                ),
+                SizedBox(height: size.height*.005,),
+                Text(
+                  '₹ ${price}',
+                  style: TextStyle(
+                    overflow: TextOverflow.ellipsis,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: size.height * .05, left: size.height * .01),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.currency_rupee,
-                          color: Colors.black,
-                          size: 20,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: size.height * .01),
-                          child: Text(
-                            price,
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: size.height * .014,
-                        left: size.height * .01,
-                        right: size.height * .01),
-                    child: Text(
-                      description,
-                      style: TextStyle(fontSize: 15, color: Colors.black),
-                    ),
-                  )
-                ],
-              ),
+                ),
+                SizedBox(height: size.height*.005,),
+                Text(
+                  overflow: TextOverflow.ellipsis,
+                  description,
+                  style: TextStyle(fontSize: 15, color: Colors.black),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

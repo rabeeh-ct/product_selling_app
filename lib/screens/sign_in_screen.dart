@@ -125,7 +125,8 @@ class _SignInScreenState extends State<SignInScreen> {
                       GestureDetector(
                         child: SignButton(
                           clr: Colors.indigo[900]!,
-                          text: widget.isitlogin == true ? 'SIGN IN' : 'SIGN UP',
+                          text:
+                              widget.isitlogin == true ? 'SIGN IN' : 'SIGN UP',
                           txtclr: Colors.white,
                           fn: sign,
                         ),
@@ -189,27 +190,29 @@ class _SignInScreenState extends State<SignInScreen> {
           .createUserWithEmailAndPassword(
               email: Constants.emailctr.text,
               password: Constants.passwordctr.text)
-          .then(
-            (value) => Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ProductScreen(),
-              ),
-            ),
-          );
+          .then((value) {
+        Constants.userDetails = value.user;
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductScreen(),
+          ),
+        );
+      });
     } else {
       FirebaseAuth.instance
           .signInWithEmailAndPassword(
               email: Constants.emailctr.text,
               password: Constants.passwordctr.text)
-          .then(
-            (value) => Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ProductScreen(),
-              ),
-            ),
-          );
+          .then((value) {
+        Constants.userDetails = value.user;
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductScreen(),
+          ),
+        );
+      });
     }
   }
 }

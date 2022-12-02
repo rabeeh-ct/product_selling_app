@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:product_selling_app/constants/constants.dart';
 import 'package:product_selling_app/screens/home_page.dart';
 import 'package:product_selling_app/screens/product_screen.dart';
 
@@ -19,12 +20,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        useMaterial3: true,
         primarySwatch: Colors.blue,
       ),
       home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              Constants.userDetails=snapshot.data;
               return ProductScreen();
             } else {
               return HomePage();

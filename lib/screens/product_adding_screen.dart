@@ -6,6 +6,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../constants/constants.dart';
+
 
 class ProductAddingScreen extends StatefulWidget {
   ProductAddingScreen({Key? key}) : super(key: key);
@@ -29,174 +31,167 @@ class _ProductAddingScreenState extends State<ProductAddingScreen> {
     Size size = MediaQuery
         .of(context)
         .size;
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: Colors.indigo[900],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: size.width,
-              height: size.height * .35,
-              color: Colors.indigo[100],
-              child: GestureDetector(
-                  onTap: () {
-                    SnackBar snackbar = SnackBar(
-                        backgroundColor: Colors.indigo[100],
-                        duration: Duration(seconds: 6),
-                        content: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () async {
-                                final XFile? photo = await _picker.pickImage(
-                                    source: ImageSource.camera);
-                                setState(() {
-                                  if (photo != null) {
-                                    imageFile = File(photo.path);
-                                  }
-                                });
-                              },
-                              child: Text('camera'),
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStatePropertyAll(
-                                    Colors.indigo[900]),
-                                foregroundColor:
-                                MaterialStatePropertyAll(Colors.white),
-                              ),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: size.width,
+            height: size.height * .35,
+            color: Colors.indigo[100],
+            child: GestureDetector(
+                onTap: () {
+                  SnackBar snackbar = SnackBar(
+                      backgroundColor: Colors.indigo[100],
+                      duration: Duration(seconds: 6),
+                      content: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () async {
+                              final XFile? photo = await _picker.pickImage(
+                                  source: ImageSource.camera,imageQuality: 50);
+                              setState(() {
+                                if (photo != null) {
+                                  imageFile = File(photo.path);
+                                }
+                              });
+                            },
+                            child: Text('camera'),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(
+                                  Colors.indigo[900]),
+                              foregroundColor:
+                              MaterialStatePropertyAll(Colors.white),
                             ),
-                            ElevatedButton(
-                              onPressed: () async {
-                                var image = await _picker.pickImage(
-                                    source: ImageSource.gallery);
-                                setState(() {
-                                  if (image != null) {
-                                    imageFile = File(image.path);
-                                  }
-                                });
-                              },
-                              child: Text('Gallery'),
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStatePropertyAll(
-                                    Colors.indigo[900]),
-                                foregroundColor:
-                                MaterialStatePropertyAll(Colors.white),
-                              ),
+                          ),
+                          ElevatedButton(
+                            onPressed: () async {
+                              var image = await _picker.pickImage(
+                                  source: ImageSource.gallery,imageQuality: 50);
+                              setState(() {
+                                if (image != null) {
+                                  imageFile = File(image.path);
+                                }
+                              });
+                            },
+                            child: Text('Gallery'),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(
+                                  Colors.indigo[900]),
+                              foregroundColor:
+                              MaterialStatePropertyAll(Colors.white),
                             ),
-                          ],
-                        ));
-                    ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                          ),
+                        ],
+                      ));
+                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        scale: 5,
+                        image: imageFile == null
+                            ? AssetImage(
+                          'assets/images/add.png',
+                        )
+                            : FileImage(imageFile!) as ImageProvider),
+                  ),
+                )),
+          ),
+          SizedBox(height: size.height * .03),
+          Center(
+            child: Container(
+                width: size.width * .9,
+                height: size.height * 0.07,
+                decoration: BoxDecoration(
+                    color: Colors.indigo[100],
+                    borderRadius: BorderRadius.circular(30)),
+                child: Center(
+                  child: Padding(
+                    padding:
+                    EdgeInsets.symmetric(horizontal: size.width * .07),
+                    child: TextField(
+                      keyboardType: TextInputType.number,
+                      controller: pricectr,
+                      decoration: InputDecoration(
+                          labelText: 'Price',
+                          border: InputBorder.none,
+                          prefixIcon: Icon(
+                            Icons.currency_rupee,
+                            color: Colors.indigo[900],
+                          )),
+                    ),
+                  ),
+                )),
+          ),
+          SizedBox(height: size.height * .03),
+          Center(
+            child: Container(
+                width: size.width * .9,
+                height: size.height * 0.07,
+                decoration: BoxDecoration(
+                    color: Colors.indigo[100],
+                    borderRadius: BorderRadius.circular(30)),
+                child: Center(
+                  child: Padding(
+                    padding:
+                    EdgeInsets.symmetric(horizontal: size.width * .07),
+                    child: TextField(
+                      controller: productnamectr,
+                      decoration: InputDecoration(
+                        labelText: 'Name of the Product',
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                )),
+          ),
+          SizedBox(height: size.height * .03),
+          Center(
+            child: Container(
+                width: size.width * .9,
+                height: size.height * 0.07,
+                decoration: BoxDecoration(
+                    color: Colors.indigo[100],
+                    borderRadius: BorderRadius.circular(30)),
+                child: Center(
+                  child: Padding(
+                    padding:
+                    EdgeInsets.symmetric(horizontal: size.width * .07),
+                    child: TextField(
+                      controller: productdesripctr,
+                      decoration: InputDecoration(
+                        labelText: 'Description',
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                )),
+          ),
+          SizedBox(height: size.height * .03),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
                   },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          scale: 5,
-                          image: imageFile == null
-                              ? AssetImage(
-                            'assets/images/add.png',
-                          )
-                              : FileImage(imageFile!) as ImageProvider),
-                    ),
-                  )),
-            ),
-            SizedBox(height: size.height * .03),
-            Center(
-              child: Container(
-                  width: size.width * .9,
-                  height: size.height * 0.07,
-                  decoration: BoxDecoration(
-                      color: Colors.indigo[100],
-                      borderRadius: BorderRadius.circular(30)),
-                  child: Center(
-                    child: Padding(
-                      padding:
-                      EdgeInsets.symmetric(horizontal: size.width * .07),
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        controller: pricectr,
-                        decoration: InputDecoration(
-                            labelText: 'Price',
-                            border: InputBorder.none,
-                            prefixIcon: Icon(
-                              Icons.currency_rupee,
-                              color: Colors.indigo[900],
-                            )),
-                      ),
-                    ),
-                  )),
-            ),
-            SizedBox(height: size.height * .03),
-            Center(
-              child: Container(
-                  width: size.width * .9,
-                  height: size.height * 0.07,
-                  decoration: BoxDecoration(
-                      color: Colors.indigo[100],
-                      borderRadius: BorderRadius.circular(30)),
-                  child: Center(
-                    child: Padding(
-                      padding:
-                      EdgeInsets.symmetric(horizontal: size.width * .07),
-                      child: TextField(
-                        controller: productnamectr,
-                        decoration: InputDecoration(
-                          labelText: 'Name of the Product',
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                  )),
-            ),
-            SizedBox(height: size.height * .03),
-            Center(
-              child: Container(
-                  width: size.width * .9,
-                  height: size.height * 0.07,
-                  decoration: BoxDecoration(
-                      color: Colors.indigo[100],
-                      borderRadius: BorderRadius.circular(30)),
-                  child: Center(
-                    child: Padding(
-                      padding:
-                      EdgeInsets.symmetric(horizontal: size.width * .07),
-                      child: TextField(
-                        maxLength: 45,
-                        controller: productdesripctr,
-                        decoration: InputDecoration(
-                          labelText: 'Description',
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                  )),
-            ),
-            SizedBox(height: size.height * .03),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    style: ButtonStyle(
-                        backgroundColor:
-                        MaterialStatePropertyAll(Colors.indigo[100]),
-                        foregroundColor:
-                        MaterialStatePropertyAll(Colors.black)),
-                    child: Text('Cancel')),
-                ElevatedButton(
-                    onPressed: () => isclickable==true?sendData():null,
-                    style: ButtonStyle(
-                        backgroundColor:
-                        MaterialStatePropertyAll(Colors.indigo[900])),
-                    child: Text('Post')),
-              ],
-            )
-          ],
-        ),
+                  style: ButtonStyle(
+                      backgroundColor:
+                      MaterialStatePropertyAll(Colors.indigo[100]),
+                      foregroundColor:
+                      MaterialStatePropertyAll(Colors.black)),
+                  child: Text('Cancel')),
+              ElevatedButton(
+                  onPressed: () => isclickable==true?sendData():null,
+                  style: ButtonStyle(
+                      backgroundColor:
+                      MaterialStatePropertyAll(Colors.indigo[900])),
+                  child:Text('Post')),
+            ],
+          )
+        ],
       ),
     );
   }
@@ -212,12 +207,13 @@ class _ProductAddingScreenState extends State<ProductAddingScreen> {
       imageurl = await imageStorage.getDownloadURL();
       print(imageurl);
       FirebaseFirestore.instance.collection('products').add({
+        'userId':Constants.userDetails!.uid,
         'name': productnamectr.text,
         'price': pricectr.text,
         'description': productdesripctr.text,
         'imageUrl':imageurl,
       });
-      Navigator.of(_scaffoldKey.currentContext!).pop();
+      // Navigator.of(_scaffoldKey.currentContext!).pop();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Product successfully uploaded'),
@@ -231,5 +227,12 @@ class _ProductAddingScreenState extends State<ProductAddingScreen> {
       );
     }
     isclickable=true;
+    productnamectr.text='';
+    pricectr.text='';
+    productdesripctr.text='';
+    imageFile=null;
+    setState(() {
+
+    });
   }
 }
